@@ -4,21 +4,12 @@ export default function Results() {
   const location = useLocation();
   const navigate = useNavigate();
 
-  let prevState = null;
-  try {
-    const storedState = localStorage.getItem("state");
-    if (storedState) {
-      prevState = JSON.parse(storedState);
-    }
-  } catch (error) {
-    console.warn("Error parsing stored state:", error);
-    prevState = null;
-  }
+
 
   const highestScore = localStorage.getItem("highestScore") || 0;
 
 
-  const currentState = location.state || prevState;
+  const currentState = location.state || {};
   if (currentState) {
     localStorage.setItem("state", JSON.stringify(currentState));
   }
@@ -32,10 +23,10 @@ export default function Results() {
     selectedAns = [],
     quizData = [],
     score = 0,
-  } = location.state || prevState || {};
+  } = location.state ||{};
 
   const handleRestart = () => {
-    navigate("/", { replace: true });
+    navigate("/quiz", { replace: true });
   };
 
   if (!quizData.length) {
